@@ -1,6 +1,6 @@
 import asyncio
 import multiprocessing
-from client import AsyncClient
+from clients.client import AsyncClient
 from config import RUN_DURATION
 
 

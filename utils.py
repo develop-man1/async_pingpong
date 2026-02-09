@@ -44,7 +44,7 @@ def parse_ping(message: str) -> int:
 
 def build_pong(response_id: int, request_id: int, client_id: int) -> str:
     
-    return f"[{response_id}.{request_id}] PONG ({client_id})"
+    return f"[{response_id}/{request_id}] PONG ({client_id})"
 
 
 def build_keepalive(response_id: int) -> str:
