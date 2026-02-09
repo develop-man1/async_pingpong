@@ -52,14 +52,17 @@ async def main():
     print(f"[{current_time()}] Serving on {addr}")
 
     keepalive_task = asyncio.create_task(keepalive_loop(handler))
-
+    server_task = asyncio.create_task(server.serve_forever())
     stop_task = asyncio.create_task(asyncio.sleep(RUN_DURATION))
 
     async with server:
-        await asyncio.wait(
-            [server.serve_forever(), stop_task],
+        done, pending = await asyncio.wait(
+            [server_task, stop_task],
             return_when=asyncio.FIRST_COMPLETED
         )
+        
+        for task in pending:
+            task.cancel()
 
     keepalive_task.cancel()
     try:
